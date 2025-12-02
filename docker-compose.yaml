@@ -3,12 +3,11 @@ version: '3.9'
 services:
   redis:
     image: redis:7.2.4
-    env_file: .env
     volumes:
       - redis_data:/data
-    command: redis-server --port ${REDIS_PORT} --requirepass ${REDIS_PASSWORD}
+    command: redis-server --port REDIS_PORT --requirepass 1234
     ports:
-      - ${REDIS_PORT}:${REDIS_PORT}
+      - 6380:6380
 
   bot:
     build:
@@ -16,11 +15,10 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - redis
-    env_file: .env
     ports:
-      - ${APP_PORT}:${APP_PORT}
+      - 5000:5000
     volumes:
-      - ${LOGGING_DIR}:/logs
+      - /home/anton/Desktop/облака/lab1/log:/logs
 
 networks:
   internal_network:
@@ -29,3 +27,4 @@ networks:
 
 volumes:
   redis_data:
+
