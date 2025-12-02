@@ -5,14 +5,12 @@ services:
     image: redis:7.2.4
     volumes:
       - redis_data:/data
-    command: redis-server --port REDIS_PORT --requirepass 1234
+    command: redis-server --port 6380 --requirepass 1234
     ports:
       - 6380:6380
 
-  bot:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  app:
+    image: lab1
     depends_on:
       - redis
     ports:
