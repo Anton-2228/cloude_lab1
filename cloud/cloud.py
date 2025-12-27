@@ -1,7 +1,3 @@
-import os
-import time
-import traceback
-
 import paho.mqtt.client as mqtt
 
 BROKER_HOST = "cloud-broker"
@@ -18,12 +14,6 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-while True:
-    try:
-        client.connect(BROKER_HOST, BROKER_PORT, 60)
-        break
-    except Exception as e:
-        print(traceback.format_exc())
-        time.sleep(1)
+client.connect(BROKER_HOST, BROKER_PORT, 60)
 
 client.loop_forever()

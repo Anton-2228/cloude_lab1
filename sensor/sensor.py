@@ -1,7 +1,6 @@
 import json
 import random
 import time
-import traceback
 
 import paho.mqtt.client as mqtt
 
@@ -11,13 +10,7 @@ TOPIC = "temperature"
 
 client = mqtt.Client()
 
-while True:
-    try:
-        client.connect(BROKER_HOST, BROKER_PORT)
-        break
-    except Exception as e:
-        print(traceback.format_exc())
-        time.sleep(1)
+client.connect(BROKER_HOST, BROKER_PORT)
 
 client.loop_start()
 
