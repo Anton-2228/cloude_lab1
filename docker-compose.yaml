@@ -1,9 +1,9 @@
 version: '3.9'
 
 services:
-  edge-broker:
+  temperature-broker:
     image: eclipse-mosquitto:2
-    container_name: edge-broker
+    container_name: temperature-broker
     command: >
       sh -c 'printf "listener 1883 0.0.0.0\nallow_anonymous true\npersistence false\n" >
       /mosquitto/config/mosquitto.conf && exec mosquitto -c /mosquitto/config/mosquitto.conf'
@@ -33,7 +33,7 @@ services:
     volumes:
       - nodered_data:/data
     depends_on:
-      - edge-broker
+      - temperature-broker
       - cloud-broker
 
   sensor:
@@ -42,7 +42,7 @@ services:
     networks:
       - factory-net
     depends_on:
-      - edge-broker
+      - temperature-broker
 
   cloud-listener:
     build: ./cloud

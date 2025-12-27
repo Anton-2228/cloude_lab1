@@ -4,7 +4,7 @@ import time
 
 import paho.mqtt.client as mqtt
 
-BROKER_HOST = "edge-broker"
+BROKER_HOST = "temperature-broker"
 BROKER_PORT = 1883
 TOPIC = "temperature"
 
