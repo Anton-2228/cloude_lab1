@@ -7,6 +7,8 @@ services:
     command: >
       sh -c 'printf "listener 1883 0.0.0.0\nallow_anonymous true\npersistence false\n" >
       /mosquitto/config/mosquitto.conf && exec mosquitto -c /mosquitto/config/mosquitto.conf'
+    networks:
+      - factory-net
     ports:
       - "1883:1883"
 
@@ -16,12 +18,16 @@ services:
     command: >
       sh -c 'printf "listener 1883 0.0.0.0\nallow_anonymous true\npersistence false\n" >
       /mosquitto/config/mosquitto.conf && exec mosquitto -c /mosquitto/config/mosquitto.conf'
+    networks:
+      - factory-net
     ports:
       - "1884:1883"
 
   nodered:
     image: nodered/node-red:latest
     container_name: nodered
+    networks:
+      - factory-net
     ports:
       - "1880:1880"
     volumes:
@@ -33,14 +39,23 @@ services:
   sensor:
     build: ./sensor
     container_name: sensor
+    networks:
+      - factory-net
     depends_on:
       - edge-broker
 
   cloud-listener:
     build: ./cloud
     container_name: cloud
+    networks:
+      - factory-net
     depends_on:
       - cloud-broker
+
+networks:
+  factory-net:
+    name: factory-net
+    driver: bridge
 
 volumes:
   nodered_data:
